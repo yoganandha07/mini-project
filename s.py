@@ -24,7 +24,14 @@ def hash_password(password):
 
 # Save user credentials to a CSV file
 def save_credentials(username, hashed_password):
-    df = pd.read_csv(CREDENTIALS_FILE) if os.path.exists(CREDENTIALS_FILE) else pd.DataFrame(columns=["username", "password"])
+    if not os.path.exists(CREDENTIALS_FILE):
+        df = pd.DataFrame(columns=["username", "password"])
+    else:
+        try:
+            df = pd.read_csv(CREDENTIALS_FILE)
+        except pd.errors.EmptyDataError:
+            df = pd.DataFrame(columns=["username", "password"])
+    
     new_entry = pd.DataFrame({"username": [username], "password": [hashed_password]})
     df = pd.concat([df, new_entry], ignore_index=True)
     df.to_csv(CREDENTIALS_FILE, index=False)
@@ -53,34 +60,6 @@ def username_exists(username):
 # Streamlit app with enhanced styling and animations
 def main():
     st.set_page_config(page_title="Sales Prediction", layout="wide")
-    
-    # Day/Night mode switch
-    theme = st.sidebar.radio("Choose Theme:", ["Day", "Night"])
-
-    if theme == "Day":
-        st.markdown(
-            """
-            <style>
-            body {
-                background-color: #ffffff;
-                color: #000000;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-    else:
-        st.markdown(
-            """
-            <style>
-            body {
-                background-color: #000000;
-                color: #ffffff;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
 
     # Animated circles with RGB colors
     st.markdown(
@@ -271,7 +250,7 @@ def app():
             # Display prediction
             st.success(f'Predicted Sales: {prediction}')
         except ValueError:
-            st.error("Please enter valid numerical values for all features.")
+            st.error("Invalid input. Please enter valid numerical values for all features.")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
