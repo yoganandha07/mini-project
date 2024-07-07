@@ -33,7 +33,10 @@ def save_credentials(username, hashed_password):
 def validate_credentials(username, password):
     if not os.path.exists(CREDENTIALS_FILE):
         return False
-    df = pd.read_csv(CREDENTIALS_FILE)
+    try:
+        df = pd.read_csv(CREDENTIALS_FILE)
+    except pd.errors.EmptyDataError:
+        return False
     hashed_password = hash_password(password)
     return not df[(df["username"] == username) & (df["password"] == hashed_password)].empty
 
@@ -41,7 +44,10 @@ def validate_credentials(username, password):
 def username_exists(username):
     if not os.path.exists(CREDENTIALS_FILE):
         return False
-    df = pd.read_csv(CREDENTIALS_FILE)
+    try:
+        df = pd.read_csv(CREDENTIALS_FILE)
+    except pd.errors.EmptyDataError:
+        return False
     return not df[df["username"] == username].empty
 
 # Streamlit app with enhanced styling and animations
