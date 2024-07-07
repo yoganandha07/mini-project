@@ -47,6 +47,34 @@ def username_exists(username):
 # Streamlit app with enhanced styling and animations
 def main():
     st.set_page_config(page_title="Sales Prediction", layout="wide")
+    
+    # Day/Night mode switch
+    theme = st.sidebar.radio("Choose Theme:", ["Day", "Night"])
+
+    if theme == "Day":
+        st.markdown(
+            """
+            <style>
+            body {
+                background-color: #ffffff;
+                color: #000000;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.markdown(
+            """
+            <style>
+            body {
+                background-color: #000000;
+                color: #ffffff;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
 
     # Animated circles with RGB colors
     st.markdown(
@@ -81,8 +109,8 @@ def main():
             animation: circle 5s infinite;
         }
         </style>
-        """
-        , unsafe_allow_html=True
+        """,
+        unsafe_allow_html=True
     )
 
     st.markdown('<div class="circle"></div>', unsafe_allow_html=True)
@@ -157,13 +185,9 @@ def main():
             background-color: #45a049;
         }
         </style>
-        """
-        , unsafe_allow_html=True
+        """,
+        unsafe_allow_html=True
     )
-
-    # st.markdown('<div class="container">', unsafe_allow_html=True)
-
-   #  st.markdown('<div class="content">', unsafe_allow_html=True)
 
     st.markdown('<div class="heading">Sales Prediction App</div>', unsafe_allow_html=True)
 
@@ -176,12 +200,6 @@ def main():
     else:
         app()
 
-    #st.markdown('</div>', unsafe_allow_html=True)
-
-    #st.markdown('</div>', unsafe_allow_html=True)
-
-    st.markdown('</div>', unsafe_allow_html=True)
-
 def login_or_signup():
     option = st.selectbox("Choose an option", ["Login", "Sign Up"])
     if option == "Login":
@@ -190,12 +208,10 @@ def login_or_signup():
         sign_up()
 
 def login():
-    #st.markdown('<div class="form-container">', unsafe_allow_html=True)
     st.subheader("Login")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
     
-    #st.markdown('<div class="button-container">', unsafe_allow_html=True)
     if st.button("Login"):
         if validate_credentials(username, password):
             st.session_state.logged_in = True
@@ -203,17 +219,13 @@ def login():
             st.experimental_rerun()
         else:
             st.error("Invalid credentials")
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 def sign_up():
-    #st.markdown('<div class="form-container">', unsafe_allow_html=True)
     st.subheader("Sign Up")
     username = st.text_input("Choose a Username")
     password = st.text_input("Choose a Password", type="password")
     confirm_password = st.text_input("Confirm Password", type="password")
     
-    st.markdown('<div class="button-container">', unsafe_allow_html=True)
     if st.button("Sign Up"):
         if password != confirm_password:
             st.error("Passwords do not match")
@@ -224,8 +236,6 @@ def sign_up():
             save_credentials(username, hashed_password)
             st.success("Account created successfully! Please log in.")
             st.experimental_rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 def app():
     st.sidebar.subheader("Navigation")
