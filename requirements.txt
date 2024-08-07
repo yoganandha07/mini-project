@@ -3,4 +3,7 @@ numpy
 pandas
 gunicorn
 xgboost
-
+html
+css
+javascript
+bootstrap
