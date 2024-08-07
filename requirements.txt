@@ -2,3 +2,4 @@ Flask
 Flask-Bootstrap
 pandas
 scikit-learn
+xgboost
