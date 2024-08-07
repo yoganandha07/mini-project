@@ -1,9 +1,4 @@
-flask
-numpy
+Flask
+Flask-Bootstrap
 pandas
-gunicorn
-xgboost
-html
-css
-javascript
-bootstrap
+scikit-learn
